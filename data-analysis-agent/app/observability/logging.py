@@ -1,0 +1,20 @@
+import logging
+from typing import Optional
+
+_LOGGING_CONFIGURED = False
+
+
+def configure_logging(level: int = logging.INFO) -> None:
+    global _LOGGING_CONFIGURED
+    if _LOGGING_CONFIGURED:
+        return
+    logging.basicConfig(
+        level=level,
+        format='%(asctime)s | %(levelname)s | %(name)s | %(message)s',
+    )
+    _LOGGING_CONFIGURED = True
+
+
+def get_logger(name: Optional[str] = None) -> logging.Logger:
+    configure_logging()
+    return logging.getLogger(name or 'data-analysis-agent')
